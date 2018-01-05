@@ -9,12 +9,13 @@ using UnityEngine.UI;
 public class QuizManager 
 : SingletonMonoBehaviour<QuizManager> {
 
-	public GameObject questionPanel;
+	public GameObject questionPanel, resultPanel;
 	public TextAsset questionCsv;
-
-	public Text questionBodyLabel;
-
+	public Text questionBodyLabel, resultLabel;
+	public Button resultCloseButton;
 	public Choices[] choices;
+
+	private Question currentQuestion;
 
 	[SerializeField]
 	private List<Question> quizzes = new List<Question>();
@@ -26,6 +27,11 @@ public class QuizManager
 	
 	public void Start () {
 		questionPanel.SetActive(false);
+		resultCloseButton.onClick.AddListener(() => {
+			resultPanel.SetActive(false);
+			questionPanel.SetActive(false);
+		});
+		resultPanel.SetActive(false);
 		var csvString = questionCsv.text;
 		var csv = CSVReader.SplitCsvGrid(csvString);
 		for (int i=1; i<csv.GetLength(1)-1; i++) 
@@ -36,7 +42,7 @@ public class QuizManager
 		}
 		quizzes = quizzes.OrderBy(i => Guid.NewGuid()).ToList();
 
-		Show(5);
+		GameController.instance.Setup();
 	}
 
 	private string[] GetRaw (string[,] csv, int row) {
@@ -49,7 +55,7 @@ public class QuizManager
 
 	public void Show (int id) {
 		questionPanel.SetActive(true);
-		var currentQuestion = quizzes.Find(q => q.id == id);
+		currentQuestion = quizzes.Find(q => q.id == id);
 		Dev.JsonLog(currentQuestion);
 		questionBodyLabel.text = currentQuestion.body;
 		var choicesData = new List<string>();
@@ -64,6 +70,11 @@ public class QuizManager
 	}
 
 	public void SelectAnswer (string answer) {
-
+		resultPanel.SetActive(true);
+		if (currentQuestion.correct == answer) {
+			resultLabel.text = "正解！";
+		} else {
+			resultLabel.text = "不正解!正解は\n" + currentQuestion.correct;
+		}
 	}
 }

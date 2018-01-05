@@ -6,7 +6,7 @@ using System;
 using System.IO;
 using System.Text;
 
-public class GameController : MonoBehaviour {
+public class GameController : SingletonMonoBehaviour<GameController> {
 	int[] array;
 	//int[] quiz;
 	public Material mat;
@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour {
 	//public Text Quiz;
 
 	// Use this for initialization
-	void Start () {
+	public void Setup () {
 		//初期化
 		array = new int[400];
 		//quiz = new int[10];
@@ -35,8 +35,15 @@ public class GameController : MonoBehaviour {
 			cube [i] = GameObject.Find (s);
 		}
 
+		int[] ids = new int[QuizManager.instance.LoadedQuizzes.Count];
+		for (int i=1; i < ids.Length; i++) {
+			ids[i] = i;
+		}
+		ids = ids.OrderBy(i => Guid.NewGuid()).ToArray();
+
 		//ゲームオブジェクトの表示非表示を決めてる
 		//int j = 0;
+		int setIdCount = 0;
 		for (int i = 0; i < 400; i++) {
 			if (array [i] == 0)
 				cube[i].SetActive (false);
@@ -47,6 +54,9 @@ public class GameController : MonoBehaviour {
 				//コライダーの当たり判定をぶつかったかどうかのみ
 				cube[i].GetComponent<BoxCollider>().isTrigger = true;
 				//quiz [j++] = array [i];
+
+				cube[i].GetComponent<MakeQuestionCube>().id = ids[setIdCount];
+				setIdCount += 1;
 			}
 		}
 	}
