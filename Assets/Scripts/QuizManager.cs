@@ -16,6 +16,7 @@ public class QuizManager
 	public Choices[] choices;
 
 	private Question currentQuestion;
+	private int questionNumber = 0;
 
 	[SerializeField]
 	private List<Question> quizzes = new List<Question>();
@@ -41,8 +42,6 @@ public class QuizManager
 			quizzes.Add(data);
 		}
 		quizzes = quizzes.OrderBy(i => Guid.NewGuid()).ToList();
-
-		GameController.instance.Setup();
 	}
 
 	private string[] GetRaw (string[,] csv, int row) {
@@ -53,9 +52,10 @@ public class QuizManager
 		return data;
 	}
 
-	public void Show (int id) {
+	public void Show (int wallId) {
 		questionPanel.SetActive(true);
-		currentQuestion = quizzes.Find(q => q.id == id);
+		currentQuestion = quizzes[questionNumber];
+		questionNumber += 1;
 		Dev.JsonLog(currentQuestion);
 		questionBodyLabel.text = currentQuestion.body;
 		var choicesData = new List<string>();
