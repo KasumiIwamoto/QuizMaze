@@ -17,11 +17,9 @@ public class SingletonMonoBehaviour<T>
 			return Instance;
 		}
 	}
-
 	protected void Awake () {
 		CheckInstance();
 	}
-
 	protected bool CheckInstance () {
 		if (Instance == null) {
 			Instance = (T)this;
@@ -30,7 +28,6 @@ public class SingletonMonoBehaviour<T>
 		else if (instance == this) {
 			return true;
 		}
-
 		Destroy(this);
 		return false;
 	}

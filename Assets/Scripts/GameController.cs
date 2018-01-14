@@ -18,12 +18,11 @@ public class GameController : SingletonMonoBehaviour<GameController> {
 	public void Setup () {
 		//初期化
 		array = new int[400];
-		//quiz = new int[10];
 
 		//csvファイルを読んで、配列に格納
 		string[] g = ReadCSV ();
 
-		//intがたにcastしてる
+		//int型にcast
 		for (int i = 0; i < 400; i++)
 			array [i] = int.Parse (g [i]);
 
@@ -41,8 +40,7 @@ public class GameController : SingletonMonoBehaviour<GameController> {
 		}
 		ids = ids.OrderBy(i => Guid.NewGuid()).ToArray();
 
-		//ゲームオブジェクトの表示非表示を決めてる
-		//int j = 0;
+		//ゲームオブジェクトの表示非表示を決める
 		int setIdCount = 0;
 		for (int i = 0; i < 400; i++) {
 			if (array [i] == 0)
@@ -53,7 +51,6 @@ public class GameController : SingletonMonoBehaviour<GameController> {
 				//透明にしたもののコライダーをisTriggerにする
 				//コライダーの当たり判定をぶつかったかどうかのみ
 				cube[i].GetComponent<BoxCollider>().isTrigger = true;
-				//quiz [j++] = array [i];
 
 				cube[i].GetComponent<MakeQuestionCube>().id = ids[setIdCount];
 				setIdCount += 1;
@@ -61,14 +58,12 @@ public class GameController : SingletonMonoBehaviour<GameController> {
 		}
 	}
 		
-	static string[] ReadCSV(){
+	static string[] ReadCSV(){ //csvファイルの読み込み
 		string filePath = @"Assets/maze001.csv";
 		string[] cols = new string[400];
 		StreamReader reader = new StreamReader(filePath, Encoding.GetEncoding("Shift_JIS"));
 		while (reader.Peek() >= 0) {
 			cols = reader.ReadLine().Split(',');
-			/*for (int n = 0; n < cols.Length; n++)
-				print (cols [n]);*/
 		}
 		reader.Close();
 		return cols;

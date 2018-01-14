@@ -11,7 +11,7 @@ public class QuizManager
 
 	public GameObject questionPanel, resultPanel;
 	public TextAsset questionCsv;
-	public Text questionBodyLabel, resultLabel;
+	public Text questionBodyLabel, resultLabel, kaisetsuLabel;
 	public Button resultCloseButton;
 	public Choices[] choices;
 
@@ -71,6 +71,7 @@ public class QuizManager
 
 	public void SelectAnswer (string answer) {
 		resultPanel.SetActive(true);
+		kaisetsuLabel.text = currentQuestion.kaisetsu;
 		if (currentQuestion.correct == answer) {
 			resultLabel.text = "正解！";
 		} else {

@@ -11,7 +11,9 @@ public class Question {
 		correct,
 		choices1,
 		choices2,
-		choices3;
+		choices3,
+		kaisetsu;
+		
 
 	public void SetData (string[] data) {
 		id = int.Parse(data[0]);
@@ -20,6 +22,7 @@ public class Question {
 		choices1 = data[3];
 		choices2 = data[4];
 		choices3 = data[5];
+		kaisetsu = data[6];
 	}
 
 }
