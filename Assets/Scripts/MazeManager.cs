@@ -6,7 +6,7 @@ public class MazeManager : MonoBehaviour {
 
 	[SerializeField] private TextAsset mazeCsv;
 	[SerializeField] private Transform player;
-	[SerializeField] private GameObject wallPrefab, itemPrefab;
+	[SerializeField] private GameObject wallPrefab, itemPrefab, hintSpherePrefab;
 	[SerializeField] private Vector2 _wallSize = new Vector2(3, 10);
 	[SerializeField] private Material questionWallMaterial;
 
@@ -14,7 +14,8 @@ public class MazeManager : MonoBehaviour {
 		_sign_start = "S",
 		_sign_wall = "1",
 		_sign_question = "2",
-		_sign_item = "3";
+		_sign_item = "3",
+		_sign_hint = "4";
 
 	void Start () {
 		var csvString = mazeCsv.text;
@@ -49,6 +50,11 @@ public class MazeManager : MonoBehaviour {
 				}
 				if (sign == _sign_item) {
 					var item = Instantiate(itemPrefab);
+					item.transform.position = setPosition + Vector3.up;
+					item.transform.SetParent(transform);
+				}
+				if (sign == _sign_hint) {
+					var item = Instantiate(hintSpherePrefab);
 					item.transform.position = setPosition + Vector3.up;
 					item.transform.SetParent(transform);
 				}

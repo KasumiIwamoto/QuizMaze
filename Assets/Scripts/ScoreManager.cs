@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreManager : MonoBehaviour {
+public class ScoreManager 
+: SingletonMonoBehaviour<ScoreManager> {
 
 	public Text scoreLabel;
-	public int score = 0;
+	public int _score = 0;
 
 	// Use this for initialization
 	void Start () {
-		score = 0;
-		setScore ();
+		_score = 0;
+		scoreLabel.text ="Score :"+ _score + "点";
 	}	
 	// Update is called once per frame
 	void Update () {
 		
 	}
 
-	public void setScore(){
-		scoreLabel.text ="Score :"+ score + "点";
+	public void AddScore (int score) {
+		_score += score;
+		scoreLabel.text ="Score :"+ _score + "点";
 	}
 }

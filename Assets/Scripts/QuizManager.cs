@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
@@ -34,6 +34,10 @@ public class QuizManager
 			resultPanel.SetActive(false);
 			questionPanel.SetActive(false);
 		});
+		hintCloseButton.onClick.AddListener(() => {
+			hintPanel.SetActive(false);
+		});
+		hintPanel.SetActive(false);
 		resultPanel.SetActive(false);
 		var csvString = questionCsv.text;
 		var csv = CSVReader.SplitCsvGrid(csvString);
@@ -43,7 +47,7 @@ public class QuizManager
 			data.SetData( GetRaw(csv, i) );
 			quizzes.Add(data);
 		}
-		quizzes = quizzes.OrderBy(i => Guid.NewGuid()).ToList();
+		// quizzes = quizzes.OrderBy(i => Guid.NewGuid()).ToList();
 	}
 
 	private string[] GetRaw (string[,] csv, int row) {
@@ -55,6 +59,7 @@ public class QuizManager
 	}
 
 	public void Show (int wallId) {
+		hintPanel.SetActive(false);
 		questionPanel.SetActive(true);
 		currentQuestion = quizzes[questionNumber];
 		questionNumber += 1;
@@ -69,6 +74,11 @@ public class QuizManager
 		for (int i=0; i<choices.Length; i++) {
 			choices[i].SetData(choicesData[i]);
 		}
+	}
+
+	public void ShowHint () {
+		hintPanel.SetActive(true);
+		hintImage.sprite = Resources.Load<Sprite>("Hints/" + (questionNumber+1).ToString());
 	}
 
 	public void SelectAnswer (string answer) {
