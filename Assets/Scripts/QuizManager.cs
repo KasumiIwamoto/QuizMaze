@@ -19,6 +19,7 @@ public class QuizManager
 	private Question currentQuestion;
 	private int questionNumber = 0;
 
+
 	[SerializeField]
 	private List<Question> quizzes = new List<Question>();
 	public List<Question> LoadedQuizzes {
@@ -75,6 +76,7 @@ public class QuizManager
 		kaisetsuLabel.text = currentQuestion.kaisetsu;
 		if (currentQuestion.correct == answer) {
 			resultLabel.text = "正解！";
+			//ScoreManage.score += 10;
 		} else {
 			resultLabel.text = "不正解!\n" + currentQuestion.correct;
 		}
