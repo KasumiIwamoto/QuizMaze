@@ -18,6 +18,7 @@ public class Item : MonoBehaviour {
 		if (hit.gameObject.CompareTag ("Player")) {
 			// このコンポーネントを持つGameObjectを破棄する
 			Destroy(gameObject);
+			//ScoreManager.score += 5;
 		}
 	}
 }
