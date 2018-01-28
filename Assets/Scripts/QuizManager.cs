@@ -9,10 +9,11 @@ using UnityEngine.UI;
 public class QuizManager 
 : SingletonMonoBehaviour<QuizManager> {
 
-	public GameObject questionPanel, resultPanel;
+	public GameObject questionPanel, hintPanel, resultPanel;
 	public TextAsset questionCsv;
+	public Image hintImage;
 	public Text questionBodyLabel, resultLabel, kaisetsuLabel;
-	public Button resultCloseButton;
+	public Button hintCloseButton, resultCloseButton;
 	public Choices[] choices;
 
 	private Question currentQuestion;
