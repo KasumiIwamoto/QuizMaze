@@ -75,7 +75,7 @@ public class QuizManager
 		if (currentQuestion.correct == answer) {
 			resultLabel.text = "正解！";
 		} else {
-			resultLabel.text = "不正解!正解は\n" + currentQuestion.correct;
+			resultLabel.text = "不正解!\n" + currentQuestion.correct;
 		}
 	}
 }
