@@ -207,4 +207,14 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		col.height = orgColHight;
 		col.center = orgVectColCenter;
 	}
+
+	public void speedZero(){
+		Time.timeScale = 0;
+		//forwardSpeed = 0;
+	}
+
+	public void speed(){
+		Time.timeScale = 1;
+		//forwardSpeed = 7;
+	}
 }

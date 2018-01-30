@@ -10,11 +10,12 @@ public class QuizManager
 : SingletonMonoBehaviour<QuizManager> {
 
 	public GameObject questionPanel, hintPanel, resultPanel;
+
 	public TextAsset questionCsv;
 	public Image hintImage;
 	public Text questionBodyLabel, resultLabel, kaisetsuLabel;
 	public Button hintCloseButton, resultCloseButton;
-	public Choices[] choices;
+	public Choices[] choices;//選択肢のセッター
 
 	private Question currentQuestion;
 	private int questionNumber = 0;
@@ -33,9 +34,11 @@ public class QuizManager
 		resultCloseButton.onClick.AddListener(() => {
 			resultPanel.SetActive(false);
 			questionPanel.SetActive(false);
+			Time.timeScale = 1;
 		});
 		hintCloseButton.onClick.AddListener(() => {
 			hintPanel.SetActive(false);
+			Time.timeScale = 1;
 		});
 		hintPanel.SetActive(false);
 		resultPanel.SetActive(false);
@@ -58,7 +61,9 @@ public class QuizManager
 		return data;
 	}
 
+	//問題をだす
 	public void Show (int wallId) {
+		Time.timeScale = 0;
 		hintPanel.SetActive(false);
 		questionPanel.SetActive(true);
 		currentQuestion = quizzes[questionNumber];
@@ -76,19 +81,23 @@ public class QuizManager
 		}
 	}
 
+	//ヒントをだす
 	public void ShowHint () {
+		Time.timeScale = 0;
 		hintPanel.SetActive(true);
 		hintImage.sprite = Resources.Load<Sprite>("Hints/" + (questionNumber+1).ToString());
 	}
 
+	//正誤判定
 	public void SelectAnswer (string answer) {
 		resultPanel.SetActive(true);
 		kaisetsuLabel.text = currentQuestion.kaisetsu;
 		if (currentQuestion.correct == answer) {
 			resultLabel.text = "正解！";
-			//ScoreManage.score += 10;
+			ScoreManager.instance.AddScore(10);
 		} else {
 			resultLabel.text = "不正解!\n" + currentQuestion.correct;
+			ScoreManager.instance.AddScore(-5);
 		}
 	}
 }
